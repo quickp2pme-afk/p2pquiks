@@ -1,7 +1,6 @@
 {
-  "name": "Nrealtime-server",
+  "name": "Nrealtime",
   "version": "1.0.0",
-  "description": "Realtime Order Notification Server",
   "main": "Nserver.js",
   "scripts": {
     "start": "node Nserver.js"
