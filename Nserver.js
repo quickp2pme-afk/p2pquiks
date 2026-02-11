@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -9,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Health check route
+// Health check
 app.get("/", (req, res) => {
   res.send("Nrealtime Server Running 🚀");
 });
@@ -23,14 +21,10 @@ const io = new Server(server, {
   }
 });
 
-// Secure push route
+// Laravel trigger route
 app.post("/Npush", (req, res) => {
 
-  const token = req.headers["x-secret-key"];
-
-  if (token !== process.env.NSECRET_KEY) {
-    return res.status(403).json({ error: "Unauthorized" });
-  }
+  console.log("🔥 Order Received:", req.body);
 
   io.emit("NnewOrder", req.body);
 
@@ -38,11 +32,11 @@ app.post("/Npush", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("Admin Connected:", socket.id);
+  console.log("✅ Admin Connected:", socket.id);
 });
 
 const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, () => {
-  console.log("Server Running on port", PORT);
+  console.log("🚀 Server Running on", PORT);
 });
